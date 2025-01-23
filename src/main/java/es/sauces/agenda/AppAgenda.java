@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 package es.sauces.agenda;
-
 import java.util.Scanner;
 
 /**
@@ -24,71 +23,69 @@ public class AppAgenda {
             System.out.println("2- Consultar Contacto");
             System.out.println("3- Modificar Contacto");
             System.out.println("4- Eliminar Contacto");
+            System.out.println("5- Listar Contactos");
+            System.out.println("6- Numero de Contactos");
             System.out.println("0- Salir");
             opcion = teclado.nextInt();
             teclado.nextLine();
-            if (opcion >= 1 && opcion <= 4) {
-                System.out.println("Introduzca nombre del contacto");
-                nombre = teclado.nextLine();
+            if (opcion >= 1 && opcion <= 6) {
                 if (opcion == 1) {
-                    if (contacto == null) {
-                        System.out.println("Introduzca telefono del contacto:");
-                        telefono = teclado.nextLine();
-                        System.out.println("Introduzca email del contacto:");
-                        email = teclado.nextLine();
-                        agenda.crearContacto(nombre, telefono, email);
-                        System.out.println("Contacto creado con exito: " + contacto);
-                    } else {
-                        System.out.println("No se puede crear el contacto");
+                    System.out.print("Introduzca nombre: ");
+                    nombre = teclado.nextLine();
+                    System.out.print("Introduzca teléfono: ");
+                    telefono = teclado.nextLine();
+                    System.out.print("Introduzca email: ");
+                    email = teclado.nextLine();
+                    Contacto nuevo = new Contacto(nombre, telefono, email);
+                    if(agenda.crearContacto(nuevo)){
+                        System.out.println("Contacto añadido.");
+                    }else{
+                        System.out.println("El contacto ya existe.");
                     }
                 } else {
-                    if (contacto != null && nombre.equals(contacto.getNombre())) {
-                        switch (opcion) {
-                            case 2 -> {
-                                System.out.println("Introduzca nombre del contacto");
-                                nombre = teclado.nextLine();
-                                contacto=agenda.consultarContacto(nombre);
-                                if(contacto!=null){
-                                    System.out.println(contacto);
-                                }else{
-                                    System.out.println("No se encontró el contacto");
-                                }
-                            }
-                            case 3 -> {
-                                System.out.println("Introduzca nombre del contacto");
-                                nombre = teclado.nextLine();
-                                contacto=agenda.consultarContacto(nombre);
-                                if(contacto!=null){
-                                    System.out.println(contacto);
-                                    System.out.print("Introduce telefono:");
-                                    telefono=teclado.nextLine();
-                                    System.out.print("Introduce email:");
-                                    email=teclado.nextLine();
-                                    contacto.setTelefono(telefono);
-                                    contacto.setEmail(email);
-                                    if(agenda.modificarContacto(contacto)){
-                                        System.out.println("Modificado"+contacto);
-                                    }else{
-                                        System.out.println("No pudo ser modificado"+contacto);
-                                    }
-                                }else{
-                                    System.out.println("No existe contacto");
-                                }
-                            }
-                            case 4 -> {
-                                System.out.print("Introduce telefono:");
-                                telefono=teclado.nextLine();
-                                contacto=agenda.consultarContacto(nombre);
-                                if(contacto!=null){
-                                    seguro=teclado.nextLine();
-                                }else{
-                                    System.out.println("No existe contacto");
-                                }
-                                
+                    switch (opcion) {
+                        case 2 -> {
+                            System.out.println("Introduzca nombre del contacto");
+                            nombre = teclado.nextLine();
+                            contacto=agenda.consultarContacto(nombre);
+                            if(contacto!=null){
+                                System.out.println(contacto);
+                            }else{
+                                System.out.println("No se encontro el contacto");
                             }
                         }
-                    } else {
-                        System.out.println("No se encontró el contacto");
+                        case 3 -> {
+                            System.out.print("Introduzca nombre: ");
+                            nombre = teclado.nextLine();
+                            System.out.print("Introduzca teléfono: ");
+                            telefono = teclado.nextLine();
+                            System.out.print("Introduzca email: ");
+                            email = teclado.nextLine();
+                            contacto = new Contacto(nombre, telefono, email);
+                            if(agenda.modificarContacto(contacto)){
+                                System.out.println("Contacto Modificado "+contacto);
+                            }else{
+                                System.out.println("No pudo ser modificado "+contacto);
+                            }
+                        }
+
+                        case 4 -> {
+                            System.out.print("Introduce nombre:");
+                            nombre=teclado.nextLine();
+                            if(agenda.eliminarContacto(nombre)){
+                                System.out.println("Contacto eliminado");
+                            }else{
+                                System.out.println("No se pudo eliminar el contacto, puede que no se haya encontrado");
+                            }
+                        }
+                    }
+                }
+                switch (opcion) {
+                    case 5 -> {
+                        System.out.println(agenda.listarContactos());
+                    }
+                    case 6 -> {
+                        System.out.println(agenda.mostrarNumeroContactos());
                     }
                 }
             } else {

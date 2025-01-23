@@ -5,16 +5,15 @@
 package es.sauces.agenda;
 
 import java.util.Objects;
-import java.util.Scanner;
 /**
  *
  * @author cristian.matveg
  */
-public class Contacto {
+
+public class Contacto implements Comparable<Contacto>{
     private String nombre;
     private String telefono;
     private String email;
-    Scanner teclado=new Scanner(System.in);
     
     public Contacto() {
     }
@@ -80,8 +79,8 @@ public class Contacto {
         return Objects.equals(this.nombre, other.nombre);
     }
 
-    void eliminarContacto(Contacto contacto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    @Override
+    public int compareTo(Contacto o){
+        return this.nombre.compareTo(o.nombre);
     }
-    
 }

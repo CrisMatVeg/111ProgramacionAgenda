@@ -3,11 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package es.sauces.agenda;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
+
 /**
  *
  * @author cristian.matveg
  */
+
 public class Agenda {
+    private List<Contacto> contactos;
+    private static Scanner teclado = new Scanner(System.in);
     private Contacto contacto;
     /**
      * METODOS*
@@ -16,38 +24,55 @@ public class Agenda {
     private String telefono;
     private String email;
     
-    public boolean crearContacto(String nombre, String telefono, String email){
-        boolean contactoCreado=false;
-        if(contacto==null){
-            contacto= new Contacto (nombre,telefono,email);
-            contactoCreado=true;
+    public Agenda() {
+        contactos=new LinkedList<>();
+    }
+    
+    public boolean crearContacto(Contacto contacto){
+        boolean salida=false;
+        if(!contactos.contains(contacto)){
+            salida=contactos.add(contacto);
         }
-        return contactoCreado;
+        return salida;
     }
 
     public Contacto consultarContacto(String nombre){
-        Contacto contacto=null;
-        if(this.contacto!=null && nombre.equals(this.contacto.getNombre())){
-            contacto=this.contacto;
+        for (int i=0;i<contactos.size();i++) {
+            Contacto ncontacto=contactos.get(i);
+            if (ncontacto.getNombre().equals(nombre)) {
+                return ncontacto;
+            }
         }
-        return contacto;
+        return null;
     }
 
     public boolean modificarContacto(Contacto contacto) {
-        boolean contactoModificado=false;
-        if(contacto != null && contacto.equals(this.contacto)){
-            this.contacto=contacto;
-            contactoModificado=true;
+        for (int i=0;i<contactos.size();i++) {
+            Contacto ncontacto=contactos.get(i);
+            if (ncontacto.equals(contacto)) {
+                contactos.set(i, contacto);
+                return true;
+            }
         }
-        return contactoModificado;
+        return false;
     }
 
-    public boolean eliminarContacto(Contacto contacto) {
-        boolean contactoEliminado=false;
-        if(contacto!=null && nombre.equals(this.contacto.getNombre())){
-            contacto=null;
-            contactoEliminado=true;
+    public boolean eliminarContacto(String nombre) {
+        for (int i=0;i<contactos.size();i++) {
+            Contacto ncontacto=contactos.get(i);
+            if (ncontacto.getNombre().equalsIgnoreCase(nombre)) {
+                contactos.remove(ncontacto);
+                return true;
+            }
         }
-        return contactoEliminado;
+        return false;
+    }
+    
+    public List<Contacto> listarContactos() {
+        return new ArrayList<>(contactos);
+    }
+    
+    public int mostrarNumeroContactos() {
+        return contactos.size();
     }
 }
