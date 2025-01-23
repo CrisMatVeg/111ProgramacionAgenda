@@ -6,7 +6,7 @@ package es.sauces.agenda;
 
 import java.util.Objects;
 /**
- *
+ * @since 1.0
  * @author cristian.matveg
  */
 
@@ -21,33 +21,49 @@ public class Contacto implements Comparable<Contacto>{
     public Contacto(String nombre) {
         this.nombre = nombre;
     }
-
+    /**
+     * @param nombre es el nombre del contacto
+     * @param telefono es el telefono del contacto
+     * @param email es el email del contacto
+     */
     public Contacto(String nombre, String telefono, String email) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.email = email;
     }
-
+    /**
+     * @return devuelve el nombre del contacto
+     */
     public String getNombre() {
         return nombre;
     }
-
+    /**
+     * @param nombre establece el nombre del contacto
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    /**
+     * @return devuelve el telefono del contactoo
+     */
     public String getTelefono() {
         return telefono;
     }
-
+    /**
+     * @param telefono establece el telefono del contacto
+     */
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
+    /**
+     * @return devuelve el email del contactoo
+     */
     public String getEmail() {
         return email;
     }
-
+    /**
+     * @param email establece el email del contacto
+     */
     public void setEmail(String email) {
         this.email = email;
     }

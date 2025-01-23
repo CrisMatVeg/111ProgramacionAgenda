@@ -5,7 +5,7 @@ package es.sauces.agenda;
 import java.util.Scanner;
 
 /**
- *
+ * @version 21
  * @author cristian.matveg
  */
 public class AppAgenda {
