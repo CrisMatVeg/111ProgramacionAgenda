@@ -4,9 +4,10 @@
  */
 package es.sauces.agenda;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 /**
  * @since 1.0
@@ -14,7 +15,7 @@ import java.util.Scanner;
  */
 
 public class Agenda {
-    private List<Contacto> contactos;
+    private Map<String,Contacto> contactos;
     private static Scanner teclado = new Scanner(System.in);
     private Contacto contacto;
     
@@ -23,43 +24,30 @@ public class Agenda {
     private String email;
     
     public Agenda() {
-        contactos=new LinkedList<>();
+        contactos=new TreeMap<>();
     }
     /**
      * @param contacto es el contacto que quieres crear 
      * @return devuelve verdadero o falso dependiendo de si se crea o no
      */
     public boolean crearContacto(Contacto contacto){
-        boolean salida=false;
-        if(!contactos.contains(contacto)){
-            salida=contactos.add(contacto);
-        }
-        return salida;
+        return contactos.putIfAbsent(contacto.getNombre(), contacto)==null;
     }
     /**
      * @param nombre es el contacto que quieres consultar
      * @return devuelve el contacto entero cuyo nombre coincide con el dado como parametro
      */
     public Contacto consultarContacto(String nombre){
-        for (int i=0;i<contactos.size();i++) {
-            Contacto ncontacto=contactos.get(i);
-            if (ncontacto.getNombre().equals(nombre)) {
-                return ncontacto;
-            }
-        }
-        return null;
+        return contactos.get(nombre);
     }
     /**
      * @param contacto es el contacto que quieres modificar 
      * @return devuelve verdadero o falso dependiendo de si se modifica o no
      */
     public boolean modificarContacto(Contacto contacto) {
-        for (int i=0;i<contactos.size();i++) {
-            Contacto ncontacto=contactos.get(i);
-            if (ncontacto.equals(contacto)) {
-                contactos.set(i, contacto);
-                return true;
-            }
+        if(contacto!=null && contactos.get(contacto.getNombre())!=null){
+            contactos.put(contacto.getNombre(), contacto);
+            return true;
         }
         return false;
     }
@@ -68,21 +56,14 @@ public class Agenda {
      * @return devuelve true o false dependiendo de si se elimina o no
      */
     public boolean eliminarContacto(String nombre) {
-        for (int i=0;i<contactos.size();i++) {
-            Contacto ncontacto=contactos.get(i);
-            if (ncontacto.getNombre().equalsIgnoreCase(nombre)) {
-                contactos.remove(ncontacto);
-                return true;
-            }
-        }
-        return false;
+        return contactos.remove(nombre)!=null;
     }
     /**
      * @param
      * @return devuelve la lista de contactos de la agenda metidos en un nuevo ArrayList
      */
     public List<Contacto> listarContactos() {
-        return new ArrayList<>(contactos);
+        return new ArrayList<>(contactos.values());
     }
     
     public int mostrarNumeroContactos() {
